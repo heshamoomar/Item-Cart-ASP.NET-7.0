@@ -1,0 +1,93 @@
+﻿
+@model WebApplication2.Models.Item
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Layout";
+}
+
+<h1>Create</h1>
+
+<h4>Item</h4>
+<hr />
+<div class="row" style="width:1800px; margin:0 auto; align-content:center;">
+    <div class="col-md-4">
+        <form enctype="multipart/form-data" asp-action="Create">
+            <div asp-validation-summary="All" class="text-black"></div>
+            <div class="form-group">
+                <label asp-for="NameInArabic" class="control-label">Name in Arabic</label>
+                <input asp-for="NameInArabic" class="form-control" />
+                <span asp-validation-for="NameInArabic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameInEnglish" class="control-label">Name in English</label>
+                <input asp-for="NameInEnglish" class="form-control" />
+                <span asp-validation-for="NameInEnglish" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemDescription" class="control-label">Item Description</label>
+                <input asp-for="ItemDescription" class="form-control" />
+                <span asp-validation-for="ItemDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemPrice" class="control-label">Item Price</label>
+                <input asp-for="ItemPrice" class="form-control" />
+                <span asp-validation-for="ItemPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateCreated" class="control-label">Date Created</label>
+                <input asp-for="DateCreated" class="form-control" />
+                <span asp-validation-for="DateCreated" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="file" asp-for="ItemImage" onchange="loadFile(event)"/>
+                <img id="myImg" height="200" />
+                <span asp-validation-for="ItemImage" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Warehouse"></label>
+                <select asp-for="Warehouse" class="form-control">
+                    <option value="0">Select warehouse</option>
+                    <option value="1">Main</option>
+                    <option value="2">Secondary</option>
+                </select>
+                <span asp-validation-for="Warehouse" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                &nbsp;
+                <a asp-action="Index" class="btn btn-warning">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Clinet side validation of item data.
+     much better than server side for any large number of users to save server resources,
+     achieve it by accessing the Render Section at footer of _Layout.cshtml.
+     The Render Section allows for applying javascript scripts only to certian pages instead of 
+     entire layout.
+-->
+
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial.cshtml"/>
+
+    <!--
+        now some javascript for handing image input
+        (second trial)
+    -->
+    <script>
+        var loadFile = function (event) {
+            var reader = new FileReader();
+            reader.onload = function (){
+                var myImg = document.getElementById('myImg');
+                myImg.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+}
